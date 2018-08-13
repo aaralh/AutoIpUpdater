@@ -14,6 +14,6 @@ Structure for config:
   "checkIpUrl": "Url which returns the current ip."
 }
 ```
-Example provider for current ip https://ipify.org.
+Example provider for current ip https://www.ipify.org.
 
 3. Run compiled code.
