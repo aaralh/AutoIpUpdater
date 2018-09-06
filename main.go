@@ -14,7 +14,7 @@ import (
 type Config struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
-	WgetUrl string `json:"wgetUrl"`
+	WgetUrl []string `json:"wgetUrl"`
 	CheckIpUrl string `json:"checkIpUrl"`
 }
 
@@ -41,12 +41,14 @@ func readFromFile() string {
 	return lastIp
 }
 // Function will perform update to the dynamic DNS service.
-func updateIpToServer(username string, password string, url string) {
-	cmd := exec.Command("wget", "--delete-after", "--no-check-certificate", "--no-proxy", "--user", username, "--password", password, url)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
-		log.Fatal(err)
+func updateIpToServer(username string, password string, urls []string) {
+	for _, url := range urls {
+		cmd := exec.Command("wget", "--delete-after", "--no-check-certificate", "--no-proxy", "--user", username, "--password", password, url)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		if err := cmd.Run(); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 // Load configuration from file.
